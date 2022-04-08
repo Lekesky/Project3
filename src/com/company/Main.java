@@ -15,8 +15,6 @@ public class Main implements CollectionOfTasks{
     static int action;  // Initialize action variable
     static ArrayList <Task> list = new ArrayList<>();     // Create the ArrayList
 
-    Main a = new Main();
-    
     
     public void allTasks() {
         System.out.println("working");
