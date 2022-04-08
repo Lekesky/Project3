@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Collections;
-
 public class Task implements Comparable<Task> {
     private String title;
     private String desc;
@@ -48,27 +46,24 @@ public class Task implements Comparable<Task> {
     }
 
 
-    public void sortTask() {
-//        if(this.priority > Main.list.indexOf(this.priority)){
-//            System.out.println(Main.list.get(1));
-//        }
-
-
-    }
-
     @Override
     public int compareTo(Task list) {
 
+        int compareResults = this.title.compareTo(list.getTitle());
+
         if (this.priority == list.getPriority()) {
-            return 0;
+            if (compareResults == 0){
+                return this.title.compareTo(list.getTitle());
+            }else{
+                return compareResults;
+            }
+
         } else if (this.priority > list.getPriority()) {
             return 1;
+
         } else {
             return -1;
         }
     }
 }
-interface Sort{
-    void compareTo();
 
-}

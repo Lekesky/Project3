@@ -6,12 +6,25 @@ import java.util.ArrayList;
 import java.util.*;
 import java.util.Scanner;
 
+interface CollectionOfTasks{
+    public void allTasks();
+}
 
-public class Main {
+public class Main implements CollectionOfTasks{
     static Scanner input = new Scanner(System.in);
     static int action;  // Initialize action variable
-    static ArrayList<Task> list = new ArrayList<>();     // Create the ArrayList
+    static ArrayList <Task> list = new ArrayList<>();     // Create the ArrayList
 
+    Main a = new Main();
+    
+    
+    public void allTasks() {
+        System.out.println("working");
+        for (Task a : list) {
+            System.out.println("List: " + a);
+        }
+
+    }
 
     public static void prompt(){        //Prompt
         System.out.println("""
@@ -144,8 +157,8 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
 
         prompt();       //Initially prompt user with options before entering the while loop
         try {
@@ -161,7 +174,8 @@ public class Main {
 
         while(action != 0 ) {
             if (action == 1) {
-                addTask();
+                // addTask();
+                // list.allTasks();
 
             } else if (action == 2) {
                 removeTask();
@@ -175,6 +189,7 @@ public class Main {
 
 
             } else if (action == 5) {
+                Collections.sort(list);
                 listTaskPriority();
 
             } else if (action == 0) {
