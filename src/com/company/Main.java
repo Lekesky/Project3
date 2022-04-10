@@ -6,23 +6,13 @@ import java.util.ArrayList;
 import java.util.*;
 import java.util.Scanner;
 
-interface CollectionOfTasks{
-    public void allTasks();
-}
 
-public class Main implements CollectionOfTasks{
+public class Main {
     static Scanner input = new Scanner(System.in);
+    static List tasks = new List();
     static int action;  // Initialize action variable
     static ArrayList <Task> list = new ArrayList<>();     // Create the ArrayList
 
-    
-    public void allTasks() {
-        System.out.println("working");
-        for (Task a : list) {
-            System.out.println("List: " + a);
-        }
-
-    }
 
     public static void prompt(){        //Prompt
         System.out.println("""
@@ -85,16 +75,26 @@ public class Main implements CollectionOfTasks{
         boolean update = true;
         while(update){
             try{
-                System.out.println("List: " + list);
+                tasks.allTasks();
                 System.out.println("Select an element to update");
                 input.nextLine();
                 itemUpdateNum = input.nextInt();
-                if (!(itemUpdateNum < 5 && itemUpdateNum >= 0)){
-                    System.out.println("Number entered is outside of array\nTry again\n");
-                    System.out.println("List: " + list);
-                    System.out.println("Select an element to update");
-                    itemUpdateNum = input.nextInt();
-                }
+
+
+                // boolean inbounds = false;
+                // while(!(inbounds)){
+                //     if (itemUpdateNum == Main.list.size()-1){
+                //         System.out.println("Number entered is outside of array\nTry again\n");
+                //         tasks.allTasks();
+                //         System.out.println("Select an element to update");
+                //         itemUpdateNum = input.nextInt();
+                //     }
+                //     if((itemUpdateNum == Main.list.size()-1)){
+                //         inbounds = true;
+                //     }
+                // }
+
+
                 update = false;
             }catch(InputMismatchException e){
                 System.out.println("\nMust be an integer");
@@ -112,22 +112,39 @@ public class Main implements CollectionOfTasks{
                 System.out.println("Enter task priority: (5 - Most Important   0 - Least Important)");
                 input.nextLine();
                 int itemNewPrior = input.nextInt();
+
+                if (!(itemNewPrior <= 5 && itemNewPrior >= 0)){
+                        System.out.println("Number entered must be between 0-5\nTry again\n");
+                        System.out.println("Enter task priority: (5 - Most Important   0 - Least Important)");
+                        itemNewPrior = input.nextInt();
+                }
                 Task a = new Task(itemUpdate, itemNewDesc, itemNewPrior);
                 list.set(itemUpdateNum, a);
                 priority = false;
             }catch(InputMismatchException e){
                 System.out.println("Must be an integer");
+            }catch (IndexOutOfBoundsException f){
+                if(list.size() == 0){
+                    System.out.println("Array is empty, please add a task first");
+                    break;
+                }else{
+                    System.out.println("\nNumber must be in bounds");
+                    System.out.println("\nSelect an element to update");
+                    itemUpdateNum = input.nextInt();
             }
         }
 
         System.out.println("List has been updated!");
+        }
     }
 
     public static void listTask(){      //Prints all tasks in the ArrayList
+        Collections.sort(list);
         if(list.size() == 0){
             System.out.println("Array is empty");
-        }else
-            System.out.println("List: " + list);
+        }else{
+            tasks.allTasks();
+        }
     }
 
     public static void listTaskPriority(){
@@ -172,8 +189,7 @@ public class Main implements CollectionOfTasks{
 
         while(action != 0 ) {
             if (action == 1) {
-                // addTask();
-                // list.allTasks();
+                addTask();
 
             } else if (action == 2) {
                 removeTask();
@@ -182,9 +198,7 @@ public class Main implements CollectionOfTasks{
                 updateTask();
 
             } else if (action == 4) {
-                Collections.sort(list);
                 listTask();
-
 
             } else if (action == 5) {
                 Collections.sort(list);
